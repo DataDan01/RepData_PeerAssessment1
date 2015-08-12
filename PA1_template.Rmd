@@ -13,6 +13,7 @@ We will import this as a CSV file and leave it as is for this analysis.
 ```{r}
 activitydata<-read.csv("activity.csv")
 head(activitydata)
+summary(activitydata)
 ```
 
 ## What is mean total number of steps taken per day?
@@ -20,26 +21,37 @@ head(activitydata)
 Here is a histogram for the total number of steps taken each day:
 
 ```{r}
-totaldailysteps<-tapply(activitydata$steps,activitydata$date,sum,na.rm=T)
+totaldailysteps<-tapply(activitydata$steps,activitydata$date,sum,na.rm=TRUE)
 hist(totaldailysteps, xlab = "Total Daily Steps", main = "Histogram of Total Daily Steps")
 ```
 
 Here is the median of the total number of steps taken each day:
 
 ```{r}
-median(totaldailysteps)
+allmedians<-tapply(activitydata$steps,activitydata$date,median,na.rm=TRUE)
+summary(allmedians)
 ```
 
 Here is the mean of the total number of steps take each day:
 ```{r}
-mean(totaldailysteps)
+allmeans<-tapply(activitydata$steps,activitydata$date,mean,na.rm=TRUE)
+summary(allmeans)
 ```
 ## What is the average daily activity pattern?
 
+Fist, we will extract the average number of steps per interval. Then we will plot the daily activity pattern.
 
+```{r}
+intervalmean<-tapply(activitydata$steps,activitydata$interval,mean,na.rm=TRUE)
+plot(x=dimnames(intervalmean)[[1]],y=intervalmean,type="l", main = "Daily Activity Pattern", xlab = "Intervals - 5 Minutes", ylab = "Interval Means")
+```
 
 ## Imputing missing values
 
+There seems to be a notable number of missing values. Let's take a look:
+```{r}
+sum(is.na(activitydata$steps))
+```
 
 
 ## Are there differences in activity patterns between weekdays and weekends?

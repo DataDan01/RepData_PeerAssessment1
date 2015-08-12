@@ -1,12 +1,12 @@
 {
-    "contents" : "---\ntitle: \"Reproducible Research: Peer Assessment 1\"\noutput: \n  html_document:\n    keep_md: true\n---\n\n\n## Loading and preprocessing the data\n\nWe will import this as a CSV file and leave it as is for this analysis. \n\n```{r}\nactivitydata<-read.csv(\"activity.csv\")\nhead(activitydata)\n```\n\n## What is mean total number of steps taken per day?\n\nHere is a histogram for the total number of steps taken each day:\n\n```{r}\ntotaldailysteps<-tapply(activitydata$steps,activitydata$date,sum,na.rm=T)\nhist(totaldailysteps, xlab = \"Total Daily Steps\", main = \"Histogram of Total Daily Steps\")\n```\n\nHere is the median of the total number of steps taken each day:\n\n```{r}\nmedian(totaldailysteps)\n```\n\nHere is the mean of the total number of steps take each day:\n```{r}\nmean(totaldailysteps)\n```\n## What is the average daily activity pattern?\n\n\n\n## Imputing missing values\n\n\n\n## Are there differences in activity patterns between weekdays and weekends?\n",
+    "contents" : "---\ntitle: \"Reproducible Research: Peer Assessment 1\"\noutput: \n  html_document:\n    keep_md: true\n---\n\n\n## Loading and preprocessing the data\n\nWe will import this as a CSV file and leave it as is for this analysis. \n\n```{r}\nactivitydata<-read.csv(\"activity.csv\")\nhead(activitydata)\nsummary(activitydata)\n```\n\n## What is mean total number of steps taken per day?\n\nHere is a histogram for the total number of steps taken each day:\n\n```{r}\ntotaldailysteps<-tapply(activitydata$steps,activitydata$date,sum,na.rm=TRUE)\nhist(totaldailysteps, xlab = \"Total Daily Steps\", main = \"Histogram of Total Daily Steps\")\n```\n\nHere is the median of the total number of steps taken each day:\n\n```{r}\nallmedians<-tapply(activitydata$steps,activitydata$date,median,na.rm=TRUE)\nsummary(allmedians)\n```\n\nHere is the mean of the total number of steps take each day:\n```{r}\nallmeans<-tapply(activitydata$steps,activitydata$date,mean,na.rm=TRUE)\nsummary(allmeans)\n```\n## What is the average daily activity pattern?\n\nFist, we will extract the average number of steps per interval. Then we will plot the daily activity pattern.\n\n```{r}\nintervalmean<-tapply(activitydata$steps,activitydata$interval,mean,na.rm=TRUE)\nplot(x=dimnames(intervalmean)[[1]],y=intervalmean,type=\"l\", main = \"Daily Activity Pattern\", xlab = \"Intervals - 5 Minutes\", ylab = \"Interval Means\")\n```\n\n## Imputing missing values\n\nThere seems to be a notable number of missing values. Let's take a look:\n```{r}\nsum(is.na(activitydata$steps))\n```\n\n\n## Are there differences in activity patterns between weekdays and weekends?\n",
     "created" : 1439412901789.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "3907276365",
+    "hash" : "3166852520",
     "id" : "B81E4C4A",
-    "lastKnownWriteTime" : 1439413698,
+    "lastKnownWriteTime" : 1439420219,
     "path" : "C:/Users/TotallyNotDanny/OneDrive/R/Reproducible Research/Week 2/RepData_PeerAssessment1/PA1_template.Rmd",
     "project_path" : "PA1_template.Rmd",
     "properties" : {
