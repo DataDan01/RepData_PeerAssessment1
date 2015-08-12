@@ -1,0 +1,17 @@
+{
+    "contents" : "---\ntitle: \"Reproducible Research: Peer Assessment 1\"\noutput: \n  html_document:\n    keep_md: true\n---\n\n\n## Loading and preprocessing the data\n\nWe will import this as a CSV file and leave it as is for this analysis. \n\n```{r}\nactivitydata<-read.csv(\"activity.csv\")\nhead(activitydata)\n```\n\n## What is mean total number of steps taken per day?\n\nHere is a histogram for the total number of steps taken each day:\n\n```{r}\ntotaldailysteps<-tapply(activitydata$steps,activitydata$date,sum,na.rm=T)\nhist(totaldailysteps, xlab = \"Total Daily Steps\", main = \"Histogram of Total Daily Steps\")\n```\n\nHere is the median of the total number of steps taken each day:\n\n```{r}\nmedian(totaldailysteps)\n```\n\nHere is the mean of the total number of steps take each day:\n```{r}\nmean(totaldailysteps)\n```\n## What is the average daily activity pattern?\n\n\n\n## Imputing missing values\n\n\n\n## Are there differences in activity patterns between weekdays and weekends?\n",
+    "created" : 1439412901789.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3907276365",
+    "id" : "B81E4C4A",
+    "lastKnownWriteTime" : 1439413698,
+    "path" : "C:/Users/TotallyNotDanny/OneDrive/R/Reproducible Research/Week 2/RepData_PeerAssessment1/PA1_template.Rmd",
+    "project_path" : "PA1_template.Rmd",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_markdown"
+}
