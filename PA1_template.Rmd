@@ -42,7 +42,7 @@ write.table(allmeans,quote = FALSE,col.names="Means")
 ```
 ## What is the average daily activity pattern?
 
-Fist, we will extract the average number of steps per interval. Then we will plot the daily activity pattern.
+First, we will extract the average number of steps per interval. Then we will plot the daily activity pattern.
 
 ```{r}
 intervalmean<-tapply(activitydata$steps,activitydata$interval,mean,na.rm=TRUE)
@@ -61,7 +61,7 @@ There seems to be a notable number of missing values. Let's take a look:
 ```{r}
 sum(is.na(activitydata$steps))
 ```
-Let's try to fill the missing values with the means for that interval. First, we will create a copy of the data set so we can fill it. Next, we will create a loop to replace the NAs. 
+Let's try to fill the missing values with the means for those intervals. First, we will create a copy of the data set so we can fill it. Next, we will create a loop to replace the NAs. 
 
 ```{r}
 activitydata2<-activitydata
