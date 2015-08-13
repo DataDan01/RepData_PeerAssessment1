@@ -20,25 +20,21 @@ str(activitydata)
 
 ## What is mean total number of steps taken per day?
 
-Here is a histogram for the total number of steps taken each day:
+Here is a histogram of the total number of steps taken each day:
 
 ```{r}
 totaldailysteps<-tapply(activitydata$steps,activitydata$date,sum,na.rm=TRUE)
 hist(totaldailysteps, xlab = "Total Daily Steps", main = "Histogram of Total Daily Steps")
 ```
 
-Here are the medians of the total number of steps taken each day:
+Here is the median of the total number of steps taken each day:
 ```{r}
-allmedians<-tapply(activitydata$steps,activitydata$date,median,na.rm=TRUE)
-write.table(allmedians,quote = FALSE,col.names="Medians")
-summary(allmedians)
+median(totaldailysteps)
 ```
 
-Here are the means of the total number of steps take each day:
+Here is the mean of the total number of steps taken each day:
 ```{r}
-allmeans<-tapply(activitydata$steps,activitydata$date,mean,na.rm=TRUE)
-write.table(allmeans,quote = FALSE,col.names="Means")
-summary(allmeans)
+mean(totaldailysteps)
 ```
 ## What is the average daily activity pattern?
 
@@ -85,23 +81,19 @@ totaldailysteps2<-tapply(activitydata2$steps,activitydata2$date,sum)
 hist(totaldailysteps2, xlab = "Total Daily Steps", main = "Histogram of Total Daily Steps with NAs Replaced")
 ```
 
-The data have gravitated more towards the center. What happened to the daily means and medians?
+The data have gravitated more towards the center. What happened to the daily mean and median?
 
-Medians:
+Median:
 ```{r}
-allmedians2<-tapply(activitydata2$steps,activitydata2$date,median)
-write.table(allmedians2,quote = FALSE,col.names="Medians with Filled NAs")
-summary(allmedians2)
+median(totaldailysteps2)
 ```
 
-Means:
+Mean:
 ```{r}
-allmeans2<-tapply(activitydata2$steps,activitydata2$date,mean)
-write.table(allmeans2,quote = FALSE,col.names="Means with Filled NAs")
-summary(allmeans2)
+mean(totaldailysteps2)
 ```
 
-These values differ from the estimates from the first part but not by much. The spread of the means has been compressed a little bit tighter around the grand mean, which remained unchanged. Most of the median distribution is still 0 because of the sheer number of 0s in the data set. 
+These values differ from the first data set. The distribution has shifted slightly to the right. The spread of the distribution has been compressed a little bit tighter around the mean. 
 
 How many zeros are there?
 ```{r}
@@ -145,5 +137,7 @@ weekpartintervalmeans<-as.ts(weekpartintervalmeans)
 
 library(lattice)
 
-xyplot(weekpartintervalmeans,xlab="Intervals - 5 Minutes",ylab="Steps")
+xyplot(weekpartintervalmeans,xlab="Intervals of 5 Minutes",ylab="Steps")
 ```
+
+We can see that there is more activity on the Weekends later in the day.
