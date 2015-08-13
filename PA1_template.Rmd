@@ -15,9 +15,7 @@ activitydata<-read.csv("activity.csv")
 activitydata$steps<-as.numeric(activitydata$steps)
 head(activitydata)
 summary(activitydata)
-class(activitydata$steps)
-class(activitydata$date)
-class(activitydata$interval)
+str(activitydata)
 ```
 
 ## What is mean total number of steps taken per day?
@@ -33,12 +31,14 @@ Here are the medians of the total number of steps taken each day:
 ```{r}
 allmedians<-tapply(activitydata$steps,activitydata$date,median,na.rm=TRUE)
 write.table(allmedians,quote = FALSE,col.names="Medians")
+summary(allmedians)
 ```
 
 Here are the means of the total number of steps take each day:
 ```{r}
 allmeans<-tapply(activitydata$steps,activitydata$date,mean,na.rm=TRUE)
 write.table(allmeans,quote = FALSE,col.names="Means")
+summary(allmeans)
 ```
 ## What is the average daily activity pattern?
 
@@ -52,7 +52,8 @@ plot(x=dimnames(intervalmean)[[1]],y=intervalmean,type="l", main = "Average Dail
 The following 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps:
 
 ```{r}
-names(which.max(intervalmean))
+cat("Interval",names(which.max(intervalmean)),"\n","Average",max(intervalmean))
+
 ```
 
 ## Imputing missing values
@@ -90,15 +91,17 @@ Medians:
 ```{r}
 allmedians2<-tapply(activitydata2$steps,activitydata2$date,median)
 write.table(allmedians2,quote = FALSE,col.names="Medians with Filled NAs")
+summary(allmedians2)
 ```
 
 Means:
 ```{r}
 allmeans2<-tapply(activitydata2$steps,activitydata2$date,mean)
 write.table(allmeans2,quote = FALSE,col.names="Means with Filled NAs")
+summary(allmeans2)
 ```
 
-These values differ from the estimates from the first part but not by much. The spread of the means has been compressed a little bit tighter around the grand mean, which remained unchanged. Most of the median distribution is still 0 because of the shear number of 0s in the data set. 
+These values differ from the estimates from the first part but not by much. The spread of the means has been compressed a little bit tighter around the grand mean, which remained unchanged. Most of the median distribution is still 0 because of the sheer number of 0s in the data set. 
 
 How many zeros are there?
 ```{r}
@@ -125,7 +128,7 @@ activitydata3$weekpart<-factor((weekdays(activitydata3$date) %in% c('Saturday','
 summary(activitydata3)
 ```
 
-Now let's get the interval means for the Weekends and Weekdays. Frst we will subset the data into two different data frames. We will then get the means for the time intervals in the "intervalmeanweekday" and "intervalmeanweekend" data frames. We will then combine the interval means into their own matrix. That matrix will then be converted into a time series object in R so it can be plotted using the xyplot function.
+Now let's get the interval means for the Weekends and Weekdays. First we will subset the data into two different data frames. We will then get the means for the time intervals in the "intervalmeanweekday" and "intervalmeanweekend" data frames. We will then combine the interval means into their own matrix. That matrix will then be converted into a time series object in R so it can be plotted using the xyplot function.
 ```{r}
 activitydataweekday<-subset(activitydata3,weekpart=="Weekday")
 activitydataweekend<-subset(activitydata3,weekpart=="Weekend")
@@ -143,5 +146,4 @@ weekpartintervalmeans<-as.ts(weekpartintervalmeans)
 library(lattice)
 
 xyplot(weekpartintervalmeans,xlab="Intervals - 5 Minutes",ylab="Steps")
-
 ```

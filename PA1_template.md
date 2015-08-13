@@ -38,27 +38,14 @@ summary(activitydata)
 ```
 
 ```r
-class(activitydata$steps)
+str(activitydata)
 ```
 
 ```
-## [1] "numeric"
-```
-
-```r
-class(activitydata$date)
-```
-
-```
-## [1] "factor"
-```
-
-```r
-class(activitydata$interval)
-```
-
-```
-## [1] "integer"
+## 'data.frame':	17568 obs. of  3 variables:
+##  $ steps   : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ date    : Factor w/ 61 levels "2012-10-01","2012-10-02",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
 ```
 
 ## What is mean total number of steps taken per day?
@@ -145,6 +132,15 @@ write.table(allmedians,quote = FALSE,col.names="Medians")
 ## 2012-11-30 NA
 ```
 
+```r
+summary(allmedians)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##       0       0       0       0       0       0       8
+```
+
 Here are the means of the total number of steps take each day:
 
 ```r
@@ -216,9 +212,18 @@ write.table(allmeans,quote = FALSE,col.names="Means")
 ## 2012-11-29 24.46875
 ## 2012-11-30 NA
 ```
+
+```r
+summary(allmeans)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##  0.1424 30.7000 37.3800 37.3800 46.1600 73.5900       8
+```
 ## What is the average daily activity pattern?
 
-Fist, we will extract the average number of steps per interval. Then we will plot the daily activity pattern.
+First, we will extract the average number of steps per interval. Then we will plot the daily activity pattern.
 
 
 ```r
@@ -232,11 +237,12 @@ The following 5-minute interval, on average across all the days in the dataset, 
 
 
 ```r
-names(which.max(intervalmean))
+cat("Interval",names(which.max(intervalmean)),"\n","Average",max(intervalmean))
 ```
 
 ```
-## [1] "835"
+## Interval 835 
+##  Average 206.1698
 ```
 
 ## Imputing missing values
@@ -250,7 +256,7 @@ sum(is.na(activitydata$steps))
 ```
 ## [1] 2304
 ```
-Let's try to fill the missing values with the means for that interval. First, we will create a copy of the data set so we can fill it. Next, we will create a loop to replace the NAs. 
+Let's try to fill the missing values with the means for those intervals. First, we will create a copy of the data set so we can fill it. Next, we will create a loop to replace the NAs. 
 
 
 ```r
@@ -351,6 +357,15 @@ write.table(allmedians2,quote = FALSE,col.names="Medians with Filled NAs")
 ## 2012-11-30 34.1132075471698
 ```
 
+```r
+summary(allmedians2)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.000   0.000   0.000   4.474   0.000  34.110
+```
+
 Means:
 
 ```r
@@ -423,7 +438,16 @@ write.table(allmeans2,quote = FALSE,col.names="Means with Filled NAs")
 ## 2012-11-30 37.3825995807128
 ```
 
-These values differ from the estimates from the first part but not by much. The spread of the means has been compressed a little bit tighter around the grand mean, which remained unchanged. Most of the median distribution is still 0 because of the shear number of 0s in the data set. 
+```r
+summary(allmeans2)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.1424 34.0900 37.3800 37.3800 44.4800 73.5900
+```
+
+These values differ from the estimates from the first part but not by much. The spread of the means has been compressed a little bit tighter around the grand mean, which remained unchanged. Most of the median distribution is still 0 because of the sheer number of 0s in the data set. 
 
 How many zeros are there?
 
@@ -482,7 +506,7 @@ summary(activitydata3)
 ## 
 ```
 
-Now let's get the interval means for the Weekends and Weekdays. Frst we will subset the data into two different data frames. We will then get the means for the time intervals in the "intervalmeanweekday" and "intervalmeanweekend" data frames. We will then combine the interval means into their own matrix. That matrix will then be converted into a time series object in R so it can be plotted using the xyplot function.
+Now let's get the interval means for the Weekends and Weekdays. First we will subset the data into two different data frames. We will then get the means for the time intervals in the "intervalmeanweekday" and "intervalmeanweekend" data frames. We will then combine the interval means into their own matrix. That matrix will then be converted into a time series object in R so it can be plotted using the xyplot function.
 
 ```r
 activitydataweekday<-subset(activitydata3,weekpart=="Weekday")

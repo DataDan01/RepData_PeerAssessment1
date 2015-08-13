@@ -86,12 +86,11 @@ head(activitydata)</code></pre>
 ##  3rd Qu.: 12.00   2012-10-05:  288   3rd Qu.:1766.2  
 ##  Max.   :806.00   2012-10-06:  288   Max.   :2355.0  
 ##  NA's   :2304     (Other)   :15840</code></pre>
-<pre class="r"><code>class(activitydata$steps)</code></pre>
-<pre><code>## [1] &quot;numeric&quot;</code></pre>
-<pre class="r"><code>class(activitydata$date)</code></pre>
-<pre><code>## [1] &quot;factor&quot;</code></pre>
-<pre class="r"><code>class(activitydata$interval)</code></pre>
-<pre><code>## [1] &quot;integer&quot;</code></pre>
+<pre class="r"><code>str(activitydata)</code></pre>
+<pre><code>## 'data.frame':    17568 obs. of  3 variables:
+##  $ steps   : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ date    : Factor w/ 61 levels &quot;2012-10-01&quot;,&quot;2012-10-02&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...</code></pre>
 </div>
 <div id="what-is-mean-total-number-of-steps-taken-per-day" class="section level2">
 <h2>What is mean total number of steps taken per day?</h2>
@@ -164,6 +163,9 @@ write.table(allmedians,quote = FALSE,col.names=&quot;Medians&quot;)</code></pre>
 ## 2012-11-28 0
 ## 2012-11-29 0
 ## 2012-11-30 NA</code></pre>
+<pre class="r"><code>summary(allmedians)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##       0       0       0       0       0       0       8</code></pre>
 <p>Here are the means of the total number of steps take each day:</p>
 <pre class="r"><code>allmeans&lt;-tapply(activitydata$steps,activitydata$date,mean,na.rm=TRUE)
 write.table(allmeans,quote = FALSE,col.names=&quot;Means&quot;)</code></pre>
@@ -229,23 +231,27 @@ write.table(allmeans,quote = FALSE,col.names=&quot;Means&quot;)</code></pre>
 ## 2012-11-28 35.3576388888889
 ## 2012-11-29 24.46875
 ## 2012-11-30 NA</code></pre>
+<pre class="r"><code>summary(allmeans)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##  0.1424 30.7000 37.3800 37.3800 46.1600 73.5900       8</code></pre>
 </div>
 <div id="what-is-the-average-daily-activity-pattern" class="section level2">
 <h2>What is the average daily activity pattern?</h2>
-<p>Fist, we will extract the average number of steps per interval. Then we will plot the daily activity pattern.</p>
+<p>First, we will extract the average number of steps per interval. Then we will plot the daily activity pattern.</p>
 <pre class="r"><code>intervalmean&lt;-tapply(activitydata$steps,activitydata$interval,mean,na.rm=TRUE)
 plot(x=dimnames(intervalmean)[[1]],y=intervalmean,type=&quot;l&quot;, main = &quot;Average Daily Activity Pattern&quot;, xlab = &quot;Intervals - 5 Minutes&quot;, ylab = &quot;Interval Means&quot;)</code></pre>
 <p><img src="data:image/png;base64,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" /></p>
 <p>The following 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps:</p>
-<pre class="r"><code>names(which.max(intervalmean))</code></pre>
-<pre><code>## [1] &quot;835&quot;</code></pre>
+<pre class="r"><code>cat(&quot;Interval&quot;,names(which.max(intervalmean)),&quot;\n&quot;,&quot;Average&quot;,max(intervalmean))</code></pre>
+<pre><code>## Interval 835 
+##  Average 206.1698</code></pre>
 </div>
 <div id="imputing-missing-values" class="section level2">
 <h2>Imputing missing values</h2>
 <p>There seems to be a notable number of missing values. Let’s take a look:</p>
 <pre class="r"><code>sum(is.na(activitydata$steps))</code></pre>
 <pre><code>## [1] 2304</code></pre>
-<p>Let’s try to fill the missing values with the means for that interval. First, we will create a copy of the data set so we can fill it. Next, we will create a loop to replace the NAs.</p>
+<p>Let’s try to fill the missing values with the means for those intervals. First, we will create a copy of the data set so we can fill it. Next, we will create a loop to replace the NAs.</p>
 <pre class="r"><code>activitydata2&lt;-activitydata
 
 for(i in 1:nrow(activitydata2))
@@ -327,6 +333,9 @@ write.table(allmedians2,quote = FALSE,col.names=&quot;Medians with Filled NAs&qu
 ## 2012-11-28 0
 ## 2012-11-29 0
 ## 2012-11-30 34.1132075471698</code></pre>
+<pre class="r"><code>summary(allmedians2)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.000   0.000   0.000   4.474   0.000  34.110</code></pre>
 <p>Means:</p>
 <pre class="r"><code>allmeans2&lt;-tapply(activitydata2$steps,activitydata2$date,mean)
 write.table(allmeans2,quote = FALSE,col.names=&quot;Means with Filled NAs&quot;)</code></pre>
@@ -392,7 +401,10 @@ write.table(allmeans2,quote = FALSE,col.names=&quot;Means with Filled NAs&quot;)
 ## 2012-11-28 35.3576388888889
 ## 2012-11-29 24.46875
 ## 2012-11-30 37.3825995807128</code></pre>
-<p>These values differ from the estimates from the first part but not by much. The spread of the means has been compressed a little bit tighter around the grand mean, which remained unchanged. Most of the median distribution is still 0 because of the shear number of 0s in the data set.</p>
+<pre class="r"><code>summary(allmeans2)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.1424 34.0900 37.3800 37.3800 44.4800 73.5900</code></pre>
+<p>These values differ from the estimates from the first part but not by much. The spread of the means has been compressed a little bit tighter around the grand mean, which remained unchanged. Most of the median distribution is still 0 because of the sheer number of 0s in the data set.</p>
 <p>How many zeros are there?</p>
 <pre class="r"><code>sum(activitydata2$steps==0,na.rm=TRUE)</code></pre>
 <pre><code>## [1] 11166</code></pre>
@@ -424,7 +436,7 @@ summary(activitydata3)</code></pre>
 ##                 
 ##                 
 ## </code></pre>
-<p>Now let’s get the interval means for the Weekends and Weekdays. Frst we will subset the data into two different data frames. We will then get the means for the time intervals in the “intervalmeanweekday” and “intervalmeanweekend” data frames. We will then combine the interval means into their own matrix. That matrix will then be converted into a time series object in R so it can be plotted using the xyplot function.</p>
+<p>Now let’s get the interval means for the Weekends and Weekdays. First we will subset the data into two different data frames. We will then get the means for the time intervals in the “intervalmeanweekday” and “intervalmeanweekend” data frames. We will then combine the interval means into their own matrix. That matrix will then be converted into a time series object in R so it can be plotted using the xyplot function.</p>
 <pre class="r"><code>activitydataweekday&lt;-subset(activitydata3,weekpart==&quot;Weekday&quot;)
 activitydataweekend&lt;-subset(activitydata3,weekpart==&quot;Weekend&quot;)
 
