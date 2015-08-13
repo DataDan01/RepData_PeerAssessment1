@@ -1,0 +1,18 @@
+{
+    "contents" : "for(i in 1:nrow(activitydata2))\n    {\n        if(is.na(activitydata2$steps[i]))\n        {\n            k<-activitydata2$interval[i]\n            k<-as.character(k)\n            activitydata2$steps[i]=intervalmean[intervalmean=k]\n        }\n    }",
+    "created" : 1439422951290.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "628930958",
+    "id" : "D4F7D744",
+    "lastKnownWriteTime" : 1439425620,
+    "path" : "C:/Users/TotallyNotDanny/OneDrive/R/Reproducible Research/Week 2/RepData_PeerAssessment1/NAreplace.R",
+    "project_path" : "NAreplace.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

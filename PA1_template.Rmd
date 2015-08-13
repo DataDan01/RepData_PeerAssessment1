@@ -52,6 +52,43 @@ There seems to be a notable number of missing values. Let's take a look:
 ```{r}
 sum(is.na(activitydata$steps))
 ```
+Let's try to fill the missing values with the means for that interval. First, we will create a copy of the data set so we can fill it. Next, we will create a loop to replace the NAs. 
 
+```{r}
+activitydata2<-activitydata
+
+for(i in 1:nrow(activitydata2))
+    {
+        if(is.na(activitydata2$steps[i]))
+        {
+            k<-activitydata2$interval[i]
+            k<-as.character(k)
+            activitydata2$steps[i]=intervalmean[intervalmean=k]
+        }
+    }
+```
+
+Let's see how filling in the missing values affected the data.
+
+```{r}
+totaldailysteps2<-tapply(activitydata2$steps,activitydata2$date,sum)
+hist(totaldailysteps2, xlab = "Total Daily Steps", main = "Histogram of Total Daily Steps with NAs Replaced")
+```
+
+The data have gravitated more towards the center. What happened to the mean and median?
+
+Median:
+```{r}
+allmedians2<-tapply(activitydata2$steps,activitydata2$date,median)
+summary(allmedians2)
+```
+
+Mean:
+```{r}
+allmeans2<-tapply(activitydata2$steps,activitydata2$date,mean)
+summary(allmeans2)
+```
+
+These values differ from the estimates from the first part but not by much. The spread of the means has been compressed a little bit tighter around the grand mean, which remained unchanged. Most of the median distribution is still 0 because of the shear number of 0s in the data set. 
 
 ## Are there differences in activity patterns between weekdays and weekends?
