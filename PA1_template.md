@@ -240,7 +240,7 @@ weekpartintervalmeans<-as.ts(weekpartintervalmeans)
 
 library(lattice)
 
-xyplot(weekpartintervalmeans,xlab="Intervals - 5 Minutes",ylab="Steps")
+xyplot(weekpartintervalmeans,xlab="Intervals of 5 Minutes",ylab="Steps")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-15-1.png) 
